@@ -85,7 +85,7 @@ function setAboutMessage(_, { message }) {
 }
 
 const server = new ApolloServer({
-  typeDefs: fs.readFileSync('./server/schema.graphql', 'utf-8'),
+  typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
   resolvers,
   formatError: (error) => {
     console.log(error);
@@ -95,10 +95,8 @@ const server = new ApolloServer({
 
 const app = express();
 
-app.use(express.static('public'));
-
 server.applyMiddleware({ app, path: '/graphql' });
 
 app.listen(5000, function () {
-  console.log('App started on port 5000');
+  console.log('API server started on port 5000');
 });

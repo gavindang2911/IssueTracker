@@ -1,0 +1,14 @@
+{
+  "name": "issuetracker",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apollo-server-express": "^2.25.1",
+    "express": "^4.17.1",
+    "graphql": "^0.13.2",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "serve": "nodemon -e js,graphql server.js"
+  }
+}
