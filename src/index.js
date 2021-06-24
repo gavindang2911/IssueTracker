@@ -94,7 +94,7 @@ class IssueAdd extends React.Component {
     const issue = {
       owner: form.owner.value,
       title: form.title.value,
-      status: 'New',
+      due: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 10),
     };
     this.props.createIssue(issue);
     form.owner.value = '';
@@ -116,6 +116,30 @@ function jsonDateReviver(key, value) {
   if (dateRegex.test(value)) return new Date(value);
   return value;
 }
+
+async function graphQLFetch(query, variables = {}) {
+  try {
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables }),
+    });
+    const body = await response.text();
+    const result = JSON.parse(body, jsonDateReviver);
+    if (result.errors) {
+      const error = result.errors[0];
+      if (error.extensions.code == 'BAD_USER_INPUT') {
+        const details = error.extensions.exception.errors.join('\n ');
+        alert(`${error.message}:\n ${details}`);
+      } else {
+        alert(`${error.extensions.code}: ${error.message}`);
+      }
+    }
+    return result.data;
+  } catch (e) {
+    alert(`Error in sending data to server: ${e.message}`);
+  }
+}
 class IssueList extends React.Component {
   constructor() {
     super();
@@ -134,22 +158,41 @@ class IssueList extends React.Component {
       }
     }`;
 
+    // const response = await fetch('http://localhost:5000/graphql', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ query }),
+    // });
+    // // const result = await response.json();
+    // const body = await response.text();
+    // const result = JSON.parse(body, jsonDateReviver);
+    // this.setState({ issues: result.data.issueList });
+    const data = await graphQLFetch(query);
+    if (data) {
+      this.setState({ issues: data.issueList });
+    }
+  }
+  async createIssue(issue) {
+    // const query = `mutation {
+    //   issueAdd(issue: {
+    //     title: "${issue.title}",
+    //     owner: "${issue.owner}",
+    //     due: "${issue.due.toISOString()}",
+    //   }) {
+    //     id
+    //   }
+    // }`;
+    const query = `mutation issueAdd($issue: IssueInputs!) {
+      issueAdd(issue: $issue) {
+        id
+      }
+    }`;
     const response = await fetch('http://localhost:5000/graphql', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
+      headers: { 'Conten-Type': 'application/json' },
+      body: JSON.stringify({ query, variable: { issue } }),
     });
-    // const result = await response.json();
-    const body = await response.text();
-    const result = JSON.parse(body, jsonDateReviver);
-    this.setState({ issues: result.data.issueList });
-  }
-  createIssue(issue) {
-    issue.id = this.state.issues.length + 1;
-    issue.created = new Date();
-    const newIssueList = this.state.issues.slice();
-    newIssueList.push(issue);
-    this.setState({ issues: newIssueList });
+    this.loadData();
   }
   render() {
     return (
