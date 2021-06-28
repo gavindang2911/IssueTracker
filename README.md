@@ -1,8 +1,7 @@
-- 'nodemon' is not recognized as an internal or external command,
-  operable program or batch file.
+# Pro MERN Stack - 2nd Edition
 
-`Install globally`
+You are browsing the source code at the end of one of the sections in the book.
 
-- `nodemon -w server -e js,graphql server/server.js`
-
-- `npm install graphql@0 apollo-server-express@2`
+The project's README which contains the list of all chapters, sections
+their sources and other useful information can be found in the
+[master branch](https://github.com/vasansr/pro-mern-stack-2).

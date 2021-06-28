@@ -1,49 +1,50 @@
 {
-  "name": "issuetracker",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.13.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "apollo-server-express": "^2.25.1",
-    "dotenv": "^6.2.0",
-    "express": "^4.17.1",
-    "graphql": "^0.13.2",
-    "http-proxy-middleware": "^0.21.0",
-    "nodemon": "^2.0.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
-  },
+  "name": "pro-mern-stack-2-ui",
+  "version": "1.0.0",
+  "description": "Pro MERN Stack (2nd Edition) - UI",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "serve": "nodemon -w server -e js,graphql server/server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "#start": "UI server. HMR is enabled in dev mode.",
+    "start": "nodemon -w uiserver.js -w .env uiserver.js",
+    "#lint": "Runs ESLint on all relevant files",
+    "lint": "eslint . --ext js,jsx --ignore-pattern public",
+    "#compile": "Generates JS bundles for production. Use with start.",
+    "compile": "webpack --mode production",
+    "#watch": "Compile, and recompile on any changes.",
+    "watch": "webpack --watch"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasansr/pro-mern-stack-2.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "vasan.promern@gmail.com",
+  "license": "ISC",
+  "homepage": "https://github.com/vasansr/pro-mern-stack-2",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1",
+    "nodemon": "^1.18.9",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-plugin-import": "^2.23.4"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-middleware": "^3.5.0",
+    "webpack-hot-middleware": "^2.24.3"
   }
 }

@@ -7,16 +7,6 @@ enum StatusType {
   Closed
 }
 
-"Toned down Issue, used as inputs, without server generated values."
-input IssueInputs {
-  title: String!
-  "Optional, if not supplied, will be set to 'New'"
-  status: StatusType = New
-  owner: String
-  effort: Int
-  due: GraphQLDate
-}
-
 type Issue {
   _id: ID!
   id: Int!
@@ -27,6 +17,19 @@ type Issue {
   created: GraphQLDate!
   due: GraphQLDate
 }
+
+"Toned down Issue, used as inputs, without server generated values."
+input IssueInputs {
+  title: String!
+  "Optional, if not supplied, will be set to 'New'"
+  status: StatusType = New
+  owner: String
+  effort: Int
+  due: GraphQLDate
+}
+
+##### Top level declarations
+
 type Query {
   about: String!
   issueList: [Issue!]!
