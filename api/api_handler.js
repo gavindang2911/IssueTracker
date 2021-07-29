@@ -1,5 +1,8 @@
 const fs = require('fs');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve('config.env'),
+});
 const { ApolloServer } = require('apollo-server-express');
 
 const GraphQLDate = require('./graphql_date.js');

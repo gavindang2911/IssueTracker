@@ -4,6 +4,7 @@ const { getDb, getNextSequence } = require('./db.js');
 async function get(_, { id }) {
   const db = getDb();
   const issue = await db.collection('issues').findOne({ id });
+  console.log(issue);
   return issue;
 }
 
@@ -16,7 +17,8 @@ async function list(_, { status, effortMin, effortMax }) {
     if (effortMin !== undefined) filter.effort.$gte = effortMin;
     if (effortMax !== undefined) filter.effort.$lte = effortMax;
   }
-  const issues = await db.collection('issues').find({}).toArray();
+  const issues = await db.collection('issues').find(filter).toArray();
+  console.log(issues);
   return issues;
 }
 

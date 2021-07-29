@@ -1,5 +1,7 @@
-require('dotenv').config();
 const path = require('path');
+require('dotenv').config({
+  path: path.resolve('sample.env'),
+});
 const express = require('express');
 const proxy = require('http-proxy-middleware');
 
@@ -35,12 +37,13 @@ if (apiProxyTarget) {
   app.use('/graphql', proxy({ target: apiProxyTarget }));
 }
 
-const UI_API_ENDPOINT =
-  process.env.UI_API_ENDPOINT || 'http://localhost:3000/graphql';
+const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT;
+
 const env = { UI_API_ENDPOINT };
 
 app.get('/env.js', (req, res) => {
   res.send(`window.ENV = ${JSON.stringify(env)}`);
+  console.log('avC' + window.ENV);
 });
 
 const port = process.env.UI_SERVER_PORT || 8000;

@@ -1,12 +1,12 @@
 import React from 'react';
+import URLSearchParams from 'url-search-params';
+import { Route } from 'react-router-dom';
 
 import IssueFilter from './IssueFilter.jsx';
 import IssueTable from './IssueTable.jsx';
 import IssueAdd from './IssueAdd.jsx';
 import IssueDetail from './IssueDetail.jsx';
 import graphQLFetch from './graphQLFetch.js';
-import URLSearchParams from 'url-search-params';
-import { Route } from 'react-router-dom';
 
 export default class IssueList extends React.Component {
   constructor() {
@@ -34,6 +34,7 @@ export default class IssueList extends React.Component {
     const params = new URLSearchParams(search);
     const vars = {};
     if (params.get('status')) vars.status = params.get('status');
+
     const effortMin = parseInt(params.get('effortMin'), 10);
     if (!Number.isNaN(effortMin)) vars.effortMin = effortMin;
     const effortMax = parseInt(params.get('effortMax'), 10);
@@ -72,6 +73,7 @@ export default class IssueList extends React.Component {
       this.loadData();
     }
   }
+
   async closeIssue(index) {
     const query = `mutation issueClose($id: Int!) {
       issueUpdate(id: $id, changes: { status: Closed }) {
