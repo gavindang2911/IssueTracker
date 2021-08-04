@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+
 const IssueRow = withRouter(({
   issue, location: { search }, closeIssue, deleteIssue, index,
 }) => {
@@ -19,13 +24,18 @@ const IssueRow = withRouter(({
         {' | '}
         <NavLink to={selectLocation}>Select</NavLink>
         {' | '}
-        <button type="button" onClick={() => { closeIssue(index); }}>
-          Close
-        </button>
+        <Tooltip title="Close">
+        <IconButton aria-label="delete">
+          <HighlightOffIcon onClick={() => { closeIssue(index); }}/>
+          </IconButton>
+        </Tooltip>
         {' | '}
-        <button type="button" onClick={() => { deleteIssue(index); }}>
-          Delete
-        </button>
+
+        <Tooltip title="Delete">
+        <IconButton aria-label="delete">
+          <DeleteIcon onClick={() => { deleteIssue(index); }}/>
+        </IconButton>
+      </Tooltip>
       </td>
     </tr>
   );

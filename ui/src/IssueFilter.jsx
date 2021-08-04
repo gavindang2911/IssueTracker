@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import URLSearchParams from 'url-search-params';
+import { Button } from '@material-ui/core';
 
 class IssueFilter extends React.Component {
   constructor({ location: { search } }) {
@@ -93,15 +94,16 @@ class IssueFilter extends React.Component {
           onChange={this.onChangeEffortMax}
         />
         {' '}
-        <button type="button" onClick={this.applyFilter}>Apply</button>
+        <Button variant="contained" color="primary" onClick={this.applyFilter}>
+          Apply
+        </Button>
         {' '}
-        <button
-          type="button"
+        <Button variant="contained" color="primary"
           onClick={this.showOriginalFilter}
           disabled={!changed}
         >
           Reset
-        </button>
+        </Button>
       </div>
     );
   }
