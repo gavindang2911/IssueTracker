@@ -7,9 +7,9 @@ import Page from './Page.jsx';
 
 
 const element = (
-  <Router>
+
     <Page />
-  </Router>
+
 );
 
 ReactDOM.render(element, document.getElementById('contents'));
