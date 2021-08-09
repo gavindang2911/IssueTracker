@@ -8,6 +8,8 @@ import IssueAdd from './IssueAdd.jsx';
 import IssueDetail from './IssueDetail.jsx';
 import graphQLFetch from './graphQLFetch.js';
 
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 export default class IssueList extends React.Component {
   constructor() {
     super();
@@ -22,15 +24,21 @@ export default class IssueList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { search: prevSearch } } = prevProps;
-    const { location: { search } } = this.props;
+    const {
+      location: { search: prevSearch },
+    } = prevProps;
+    const {
+      location: { search },
+    } = this.props;
     if (prevSearch !== search) {
       this.loadData();
     }
   }
 
   async loadData() {
-    const { location: { search } } = this.props;
+    const {
+      location: { search },
+    } = this.props;
     const params = new URLSearchParams(search);
     const vars = {};
     if (params.get('status')) vars.status = params.get('status');
@@ -99,7 +107,10 @@ export default class IssueList extends React.Component {
       issueDelete(id: $id)
     }`;
     const { issues } = this.state;
-    const { location: { pathname, search }, history } = this.props;
+    const {
+      location: { pathname, search },
+      history,
+    } = this.props;
     const { id } = issues[index];
     const data = await graphQLFetch(query, { id });
     if (data && data.issueDelete) {
@@ -121,16 +132,31 @@ export default class IssueList extends React.Component {
     const { match } = this.props;
     return (
       <React.Fragment>
-        <IssueFilter />
-        <hr />
+        <Paper
+          elevation={1}
+          style={{
+            paddingTop: '10px',
+            paddingLeft: '20px',
+            paddingBottom: '20px',
+            marginBottom: '20px',
+            width: '98%',
+            justifyContent: 'center',
+            borderBottom: '1.5px solid silver',
+          }}
+        >
+          <Typography variant="h5" component="h3">
+            Filter
+          </Typography>
+          <IssueFilter />
+        </Paper>
         <IssueTable
           issues={issues}
           closeIssue={this.closeIssue}
           deleteIssue={this.deleteIssue}
         />
-        <hr />
+
         <IssueAdd createIssue={this.createIssue} />
-        <hr />
+
         <Route path={`${match.path}/:id`} component={IssueDetail} />
       </React.Fragment>
     );

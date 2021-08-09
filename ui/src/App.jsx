@@ -5,12 +5,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Page from './Page.jsx';
 
-
-const element = (
-
-    <Page />
-
-);
+const element = <Page style={{ marginLeft: '300px' }} />;
 
 ReactDOM.render(element, document.getElementById('contents'));
 
