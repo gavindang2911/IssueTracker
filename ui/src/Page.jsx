@@ -17,6 +17,8 @@ import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
+import AddIcon from '@material-ui/icons/Add';
+import IssueAdd from './IssueAdd.jsx';
 
 const useStyles = makeStyles(() => ({
   tab: {
@@ -51,11 +53,17 @@ const useStyles = makeStyles(() => ({
 function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [openDialog, setOpenDialog] = React.useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -93,16 +101,31 @@ function NavBar() {
             to="/report"
             className={classes.tab}
           />
+          <div
+            onClick={handleOpenDialog}
+            style={{
+              marginLeft: 'auto',
+              marginRight: '20px',
+              marginTop: '17px',
+            }}
+          >
+            <AddIcon className={classes.tab}></AddIcon>
+          </div>
+          <IssueAdd
+            // createIssue={this.createIssue}
+            open={openDialog}
+            handleClose={handleCloseDialog}
+          />
+
           <IconButton
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}
-            style={{ marginLeft: 'auto', marginRight: '50px' }}
+            style={{ marginRight: '20px' }}
           >
             <MenuIcon style={{ color: '#fff' }} className={classes.tab} />
           </IconButton>
         </Tabs>
-
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -131,18 +154,24 @@ function NavBar() {
 }
 function Footer() {
   return (
-    <div style={{ paddingBottom: '60px' }}>
+    <div>
       <div
         style={{
-          position: 'fixed',
+          position: 'static',
           textAlign: 'center',
           bottom: '0',
-          width: '100%',
+          // width: '100%',
           height: '40px',
           backgroundColor: '#D8D8F5',
         }}
       >
-        <p>
+        <p
+          style={{
+            justifyContent: 'center',
+            alignContent: 'center',
+            paddingTop: '10px',
+          }}
+        >
           Made by Gavin Dang 2021{' '}
           <a href="https://github.com/gavindang2911">GitHub repository</a>
         </p>
