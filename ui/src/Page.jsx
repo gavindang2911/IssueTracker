@@ -101,6 +101,13 @@ function NavBar() {
             to="/report"
             className={classes.tab}
           />
+          <Tab
+            label="About"
+            value="/about"
+            component={Link}
+            to="/about"
+            className={classes.tab}
+          />
           <div
             onClick={handleOpenDialog}
             style={{
@@ -157,19 +164,20 @@ function Footer() {
     <div>
       <div
         style={{
-          position: 'static',
+          position: 'fixed',
           textAlign: 'center',
           bottom: '0',
-          // width: '100%',
-          height: '40px',
+          width: '100%',
+          height: '18px',
           backgroundColor: '#D8D8F5',
         }}
       >
         <p
           style={{
+            fontSize: '8px',
             justifyContent: 'center',
             alignContent: 'center',
-            paddingTop: '10px',
+            paddingBottom: '15px',
           }}
         >
           Made by Gavin Dang 2021{' '}
@@ -184,14 +192,15 @@ export default function Page() {
     <Router>
       <div>
         <NavBar />
-        <Switch>
+        {/* <Switch>
           <Redirect exact from="/" to="/issues" />
           <Route path="/issues" component={IssueList} />
           <Route path="/edit/:id" component={IssueEdit} />
           <Route path="/report" component={IssueReport} />
           <Route component={NotFound} />
-        </Switch>
-        <Footer />
+        </Switch> */}
+        <Contents />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

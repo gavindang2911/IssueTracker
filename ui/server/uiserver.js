@@ -4,6 +4,7 @@ require('dotenv').config({
 });
 const express = require('express');
 const proxy = require('http-proxy-middleware');
+const render = require('./render.js');
 
 const app = express();
 
@@ -17,7 +18,7 @@ if (enableHMR && process.env.NODE_ENV !== 'production') {
   const devMiddleware = require('webpack-dev-middleware');
   const hotMiddleware = require('webpack-hot-middleware');
 
-  const config = require('./webpack.config.js');
+  const config = require('../webpack.config.js');
   config.entry.app.push('webpack-hot-middleware/client');
   config.plugins = config.plugins || [];
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -26,6 +27,7 @@ if (enableHMR && process.env.NODE_ENV !== 'production') {
   app.use(devMiddleware(compiler));
   app.use(hotMiddleware(compiler));
 }
+app.get('/about', render);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('public/index.html'));
