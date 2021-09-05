@@ -1,3 +1,5 @@
+// db.issues.remove({});
+// db.deleted_issues.remove({});
 const owners = ['Ravan', 'Eddie', 'Pieta', 'Parvati', 'Victor'];
 const statuses = ['New', 'Assigned', 'Fixed', 'Closed'];
 const initialCount = db.issues.count();
