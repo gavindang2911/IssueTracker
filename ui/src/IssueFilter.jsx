@@ -14,7 +14,7 @@ class IssueFilter extends React.Component {
       status: params.get('status') || '',
       effortMin: params.get('effortMin') || '',
       effortMax: params.get('effortMax') || '',
-      changed:false,
+      changed: false,
     };
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onChangeEffortMin = this.onChangeEffortMin.bind(this);
@@ -23,8 +23,12 @@ class IssueFilter extends React.Component {
     this.showOriginalFilter = this.showOriginalFilter.bind(this);
   }
   componentDidUpdate(prevProps) {
-    const { location: { search: prevSearch } } = prevProps;
-    const { location: { search } } = this.props;
+    const {
+      location: { search: prevSearch },
+    } = prevProps;
+    const {
+      location: { search },
+    } = this.props;
     if (prevSearch !== search) {
       this.showOriginalFilter();
     }
@@ -39,13 +43,15 @@ class IssueFilter extends React.Component {
     }
   }
   onChangeEffortMax(e) {
-    const effortString = e.target.value ;
+    const effortString = e.target.value;
     if (effortString.match(/^\d*$/)) {
       this.setState({ effortMax: e.target.value, changed: true });
     }
   }
   showOriginalFilter() {
-    const { location: { search } } = this.props;
+    const {
+      location: { search },
+    } = this.props;
     const params = new URLSearchParams(search);
     this.setState({
       status: params.get('status') || '',
@@ -55,50 +61,45 @@ class IssueFilter extends React.Component {
   }
   applyFilter() {
     const { status, effortMin, effortMax } = this.state;
-    const { history } = this.props;
+    const { history, urlBase } = this.props;
     const params = new URLSearchParams();
     if (status) params.set('status', status);
     if (effortMin) params.set('effortMin', effortMin);
     if (effortMax) params.set('effortMax', effortMax);
     const search = params.toString() ? `?${params.toString()}` : '';
-    history.push({ pathname: '/issues', search });
+    history.push({ pathname: urlBase, search });
   }
   render() {
-    const { location: { search } } = this.props;
+    const {
+      location: { search },
+    } = this.props;
     const { status, changed } = this.state;
     const { effortMin, effortMax } = this.state;
     const params = new URLSearchParams(search);
     return (
       <div>
-        Status:
-        {' '}
+        Status:{' '}
         <select value={status} onChange={this.onChangeStatus}>
           <option value="">(All)</option>
           <option value="New">New</option>
           <option value="Assigned">Assigned</option>
           <option value="Fixed">Fixed</option>
           <option value="Closed">Closed</option>
-        </select>
-        {' '}
-        Effort between:
-        {' '}
-        <input
-          size={5}
-          value={effortMin}
-          onChange={this.onChangeEffortMin}
-        />
+        </select>{' '}
+        Effort between:{' '}
+        <input size={5} value={effortMin} onChange={this.onChangeEffortMin} />
         {' - '}
         <input
           size={5}
           value={effortMax}
           onChange={this.onChangeEffortMax}
-        />
-        {' '}
+        />{' '}
         <Button variant="contained" color="primary" onClick={this.applyFilter}>
           Apply
-        </Button>
-        {' '}
-        <Button variant="contained" color="primary"
+        </Button>{' '}
+        <Button
+          variant="contained"
+          color="primary"
           onClick={this.showOriginalFilter}
           disabled={!changed}
         >

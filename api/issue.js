@@ -18,7 +18,6 @@ async function list(_, { status, effortMin, effortMax }) {
     if (effortMax !== undefined) filter.effort.$lte = effortMax;
   }
   const issues = await db.collection('issues').find(filter).toArray();
-  console.log(issues);
   return issues;
 }
 

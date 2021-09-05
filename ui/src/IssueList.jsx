@@ -8,13 +8,20 @@ import IssueAdd from './IssueAdd.jsx';
 import IssueDetail from './IssueDetail.jsx';
 import graphQLFetch from './graphQLFetch.js';
 
+import store from './store.js';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 export default class IssueList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [] };
-    this.createIssue = this.createIssue.bind(this);
+    // this.state = { issues: [] };
+    const issues = store.initialData ? store.initialData.issueList : null;
+    const selectedIssue = store.initialData ? store.initialData.issue : null;
+    delete store.initialData;
+    this.state = {
+      issues,
+      selectedIssue,
+    };
     this.closeIssue = this.closeIssue.bind(this);
     this.deleteIssue = this.deleteIssue.bind(this);
   }
@@ -58,14 +65,17 @@ export default class IssueList extends React.Component {
         effortMin: $effortMin
         effortMax: $effortMax
       ) {
-        id title status owner
-        created effort due
+          id title status owner
+          created effort due
       }
     }`;
 
     const data = await graphQLFetch(query, vars);
     if (data) {
-      this.setState({ issues: data.issueList });
+      this.setState({
+        issues: data.issueList,
+        selectedIssue: data.issue,
+      });
     }
   }
 
@@ -129,7 +139,9 @@ export default class IssueList extends React.Component {
 
   render() {
     const { issues } = this.state;
+    if (issues == null) return null;
     const { match } = this.props;
+    const { selectedIssue } = this.state;
     return (
       <React.Fragment>
         <Paper
@@ -147,13 +159,14 @@ export default class IssueList extends React.Component {
           <Typography variant="h5" component="h3">
             Filter
           </Typography>
-          <IssueFilter />
+          <IssueFilter urlBase="/issues" />
         </Paper>
         <IssueTable
           issues={issues}
           closeIssue={this.closeIssue}
           deleteIssue={this.deleteIssue}
         />
+        {/* <IssueDetail issue={selectedIssue} /> */}
 
         {/* <IssueAdd createIssue={this.createIssue} /> */}
 
