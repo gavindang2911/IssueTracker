@@ -10,8 +10,7 @@ const app = express();
 
 installHandler(app);
 
-const port = process.env.API_SERVER_PORT || 5000;
-
+const port = process.env.PORT || 5000;
 (async function start() {
   try {
     await connectToDb();

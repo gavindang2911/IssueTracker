@@ -1,5 +1,7 @@
-/* eslint "no-alert": "off" */
-
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve('sample.env'),
+});
 const dateRegex = new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d');
 
 function jsonDateReviver(key, value) {
@@ -7,13 +9,20 @@ function jsonDateReviver(key, value) {
   return value;
 }
 
+// const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT;
+// console.log(window.ENV.UI_API_ENDPOINT);
+
+// console.log(`asdfsd ${UI_API_ENDPOINT}`);
 export default async function graphQLFetch(query, variables = {}) {
   try {
-    const response = await fetch('http://localhost:3000/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, variables }),
-    });
+    const response = await fetch(
+      'https://pure-harbor-07164.herokuapp.com/graphql',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables }),
+      }
+    );
     const body = await response.text();
     const result = JSON.parse(body, jsonDateReviver);
 

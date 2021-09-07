@@ -29,14 +29,14 @@ if (enableHMR && process.env.NODE_ENV !== 'production') {
 }
 app.get('/about', render);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve('public/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve('public/index.html'));
+// });
 app.use(express.static('public'));
 
 const apiProxyTarget = process.env.API_PROXY_TARGET;
 if (apiProxyTarget) {
-  app.use('/graphql', proxy({ target: apiProxyTarget }));
+  app.use('/graphql', proxy({ target: apiProxyTarget, changeOrigin: true }));
 }
 
 const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT;
@@ -48,7 +48,7 @@ app.get('/env.js', (req, res) => {
   console.log('avC' + window.ENV);
 });
 
-const port = process.env.UI_SERVER_PORT || 8000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
   console.log(`UI started on port ${port}`);

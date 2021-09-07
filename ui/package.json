@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Pro MERN Stack (2nd Edition) - UI",
   "main": "index.js",
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  },
   "scripts": {
     "#start": "UI server. HMR is enabled in dev mode.",
     "start": "nodemon -w server -w .env server/uiserver.js",
@@ -11,7 +15,10 @@
     "#compile": "Generates JS bundles for production. Use with start.",
     "compile": "webpack --mode production",
     "#watch": "Compile, and recompile on any changes.",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "#dev-all": "Dev mode: watch for server changes and start UI server",
+    "dev-all": "rm dist/* && npm run watch-server-hmr & sleep 5 && npm start",
+    "heroku-postbuild": "npm run compile && ln -fs ../node_modules/bootstrap/dist public/bootstrap"
   },
   "repository": {
     "type": "git",

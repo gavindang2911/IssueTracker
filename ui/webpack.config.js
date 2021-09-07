@@ -23,5 +23,12 @@ module.exports = {
       chunks: 'all',
     },
   },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
+  node: {
+    fs: 'empty',
+  },
   devtool: 'source-map',
 };
